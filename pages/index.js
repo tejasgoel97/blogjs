@@ -1,6 +1,7 @@
 import React from "react";
 import FeaturedPosts from "../components/home-page/featured-posts";
 import Hero from "../components/home-page/hero";
+import { featuredPosts } from "../lib/post-util";
 
 const DUMMY_POSTS = [
   {
@@ -30,13 +31,20 @@ const DUMMY_POSTS = [
 ];
 // getting-started-with-next-js/Getting-Started-with-NextJS.jpg
 
-function index() {
+function index(props) {
+  const { posts } = props;
   return (
     <>
       <Hero />
-      <FeaturedPosts posts={DUMMY_POSTS} />
+      <FeaturedPosts posts={posts} />
     </>
   );
+}
+export async function getStaticProps() {
+  const AllfeaturedPosts = featuredPosts();
+  return {
+    props: { posts: AllfeaturedPosts },
+  };
 }
 
 export default index;
