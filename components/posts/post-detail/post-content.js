@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import PostHeader from "./post-header";
 import classes from "./post-content.module.css";
@@ -13,13 +14,21 @@ const DUMMY_POST = {
   content: "# This is a first post",
 };
 
-const imagePath = `/images/posts/${DUMMY_POST.slug}/${DUMMY_POST.image}`;
+function PostContent(props) {
+  const { content, title, image, slug } = props.postData;
+  const imagePath = `/images/posts/${slug}/${image}`;
 
-function PostContent() {
+  const renderers = {
+    image: (data) => {
+      console.log("DATAA", data);
+      return <Image src={data.src} width={100} height={100} />;
+    },
+  };
+
   return (
     <article className={classes.content}>
-      <PostHeader title={DUMMY_POST.title} image={imagePath} />
-      <ReactMarkdown>{DUMMY_POST.content}</ReactMarkdown>
+      <PostHeader title={title} image={imagePath} />
+      <ReactMarkdown renderers={renderers}>{content}</ReactMarkdown>
     </article>
   );
 }
