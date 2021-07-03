@@ -1,18 +1,11 @@
 import React from "react";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { materialDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+
 import PostHeader from "./post-header";
 import classes from "./post-content.module.css";
-
-const DUMMY_POST = {
-  title: "Getting Started with Next Js",
-  slug: "getting-started-with-next-js",
-  image: "Getting-Started-with-NextJS.jpg",
-  excerpt:
-    "this ia asakjhsdkjsasd sdjfsfd sdfsd fsdh sdgfsd sdgfd gfdsf dfsgd fgdfgdf ",
-  date: "2021-02-11",
-  content: "# This is a first post",
-};
 
 function PostContent(props) {
   const { content, title, image, slug } = props.postData;
@@ -22,6 +15,18 @@ function PostContent(props) {
     image: (data) => {
       console.log("DATAA", data);
       return <Image src={data.src} width={100} height={100} />;
+    },
+    code: (data) => {
+      console.log(data);
+      return (
+        <SyntaxHighlighter
+          language="javascript"
+          style={materialDark}
+          showLineNumbers
+        >
+          {data.node.value}
+        </SyntaxHighlighter>
+      );
     },
   };
 
